@@ -18,6 +18,7 @@ print(alphabet)
 
 #Find if a given number entered by the user is a pangram or not ?
 #A pangram number is a number which contains at least one occurrence of each digit.
+
 digits={'0':0,'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0}
 ui=input("can you pleas give us any number to see if it is a pangram")
 l=len(ui)
@@ -27,6 +28,12 @@ else:
     for i in ui:
         if i in digits:
             digits[i]=digits[i]+1
+print(digits)
+if 0 in digits.values():
+    print("this is not a panogram")
+else:
+    print("this is a panogram")
 
+    
 
     
