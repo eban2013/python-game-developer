@@ -1,5 +1,6 @@
 import pgzrun
 import random 
+import time 
 
 WIDTH=800
 HIGHT=600
@@ -22,9 +23,9 @@ for i in range(satellite_no):
     satellite.y=random.randint(50,HIGHT-50)
 
     satellites.append(satellite)
-    
-print(satellites)
 
+starttime=time.time()
+timelaps=0
 
 
 def draw():
@@ -39,7 +40,12 @@ def draw():
     for line in lines:
         screen.draw.line(line[0],line[1],'white')
 
+    screen.draw.text (str(timelaps),(50,50))
 
+def update():
+    global timelaps
+    if current_sat<satellite_no:
+        timelaps=round(time.time()-starttime,2)
 
 def on_mouse_down(pos):
     global current_sat,lines
