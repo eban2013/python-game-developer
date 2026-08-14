@@ -7,7 +7,9 @@ galaga=Actor('galaga')
 galaga.pos=(WIDTH/2,HEIGHT-50)
 bullets=[]
 
-
+direction=1
+gameover=False
+gom=" "
 
 enemies=[]
 y=50
@@ -25,17 +27,25 @@ for i in range (3):
 
 def draw ():
     screen.blit('space',(0,0))
-    galaga.draw()
+    if not gameover:
+        galaga.draw()
 
-    for bullet in bullets:
-        bullet.draw()
+        for bullet in bullets:
+            bullet.draw()
 
-    for row in enemies:
-        for enemy in row :
-            enemy.draw()
+        for row in enemies:
+            for enemy in row :
+                enemy.draw()
+    else:
+        screen.draw.text(gom,(0,0))
+
 
 
 def update():
+    global direction,gom,gameover
+
+    movedown=False
+
     if keyboard.a :
         galaga.x=galaga.x-3
 
@@ -53,7 +63,28 @@ def update():
                 if enemy.colliderect(bullet):
                     enemies[i].remove(enemy)
                     bullets.remove(bullet)
+                    sounds.eep.play()
 
+    if any(enemies):
+       if enemies[0][-1].x>=WIDTH or enemies[0][0].x <= 0 :
+           direction=direction*-1 
+           movedown=True
+    else:
+        gameover=True
+        gom="you won the game well done" 
+    
+        
+
+
+    
+
+    
+    for row in enemies :
+        for enemy in row :
+            enemy.x=enemy.x+2*direction
+            if movedown:
+                enemy.y=enemy.y+100
+        
 
 
 def on_key_down(key):
