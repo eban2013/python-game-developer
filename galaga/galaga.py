@@ -66,15 +66,33 @@ def update():
                     sounds.eep.play()
 
     if any(enemies):
-       if enemies[0][-1].x>=WIDTH or enemies[0][0].x <= 0 :
+        if enemies[0][-1].x>=WIDTH or enemies[0][0].x <= 0 :
            direction=direction*-1 
            movedown=True
+
+        for i in range (3):
+            for enemy in enemies[i]:
+                for bullet in bullets:
+                    if enemy.colliderect(bullet):
+                        enemies[i].remove(enemy)
+                        bullets.remove(bullet)
+                        sounds.eep.play()
+    
+
+
+
+
+
     else:
         gameover=True
         gom="you won the game well done" 
     
         
-
+    for row in enemies:
+        for enemy in row:
+            if enemy.colliderect(galaga):
+                gameover=True
+                gom="you lost try again "
 
     
 
@@ -85,7 +103,7 @@ def update():
             if movedown:
                 enemy.y=enemy.y+100
         
-
+    
 
 def on_key_down(key):
     if key==keys.SPACE:
